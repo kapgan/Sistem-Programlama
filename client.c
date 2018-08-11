@@ -19,8 +19,9 @@ struct hostent *host;
 
 serveraddr.sin_family=AF_INET;
 host=gethostbyname("127.0.0.1");
+//serveraddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 serveraddr.sin_port=htons(5015);
-
+ memcpy(&serveraddr.sin_addr, host->h_addr_list[0], host->h_length);
 int c=connect(sock,(struct sockaddr*)&serveraddr,sizeof(serveraddr));
 
 if(c<0)
@@ -31,7 +32,7 @@ printf("Mesahinizi yaziniz..\n");
 fgets(message,1024,stdin);
 printf("Mesajiniz = %s \n",message);
 
-int s=send(sock,message,strlen(message),0);
+int s=send(sock,message,strlen(message)+1,0);
 if(s<0)
 perror("SEND ERROR\n");
 else
