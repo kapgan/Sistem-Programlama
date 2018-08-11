@@ -8,18 +8,18 @@
 #include <wait.h>
 #include <string.h>
 #include <netdb.h>
-#define PORT 8080
-int main(int argc, char const *argv[]){printf("111");
-int sock=socket(AF_INET, SOCK_STREAM,0);printf("112");
+
+
+int main(int argc, char const *argv[]){
+int sock=socket(AF_INET, SOCK_STREAM,0);
 if(sock<0)
 perror("Create error\n");
-printf("113");
+
 struct sockaddr_in serveraddr;
 struct hostent *host;
 
 serveraddr.sin_family=AF_INET;
 host=gethostbyname("127.0.0.1");
-//serveraddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 serveraddr.sin_port=htons(5015);
  memcpy(&serveraddr.sin_addr, host->h_addr_list[0], host->h_length);
 int c=connect(sock,(struct sockaddr*)&serveraddr,sizeof(serveraddr));
